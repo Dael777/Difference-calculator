@@ -1,6 +1,6 @@
 {
   "name": "gendiffdael",
-  "version": "1.0.1",
+  "version": "2.0.3",
   "description": "Compares two configuration files and shows a difference.",
   "main": "",
   "bin": {
@@ -10,9 +10,9 @@
     "dist"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production babel src --out-dir dist --source-maps inline",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "jest --colors --watch"
   },
   "keywords": [
     "files",
@@ -24,6 +24,9 @@
   ],
   "author": "Dael777",
   "license": "ISC",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",
@@ -32,9 +35,11 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0"
+    "eslint-plugin-import": "^2.16.0",
+    "jest": "^24.1.0"
   },
   "dependencies": {
-    "commander": "^2.19.0"
+    "commander": "^2.19.0",
+    "lodash": "^4.17.11"
   }
 }
