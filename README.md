@@ -6,8 +6,7 @@
 
 <h2>Help</h2>
 
-[![asciicast](https://asciinema.org/a/mJqmJIr9nhD0i55ort7uPwZJk.svg)](https://asciinema.org/a
-/mJqmJIr9nhD0i55ort7uPwZJk)
+[![asciicast](https://asciinema.org/a/mJqmJIr9nhD0i55ort7uPwZJk.svg)](https://asciinema.org/a/mJqmJIr9nhD0i55ort7uPwZJk)
 
 <h2>Usage</h2>
 
