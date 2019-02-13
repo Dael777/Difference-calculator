@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
+import parseFile from './parsers';
 
 const currentPath = process.cwd();
 
@@ -22,19 +23,17 @@ const compareFiles = (firstFile, secondFile) => {
   return `{\n${filesDifference.join('')}}`;
 };
 
-const getJsonContent = fullPath => JSON.parse(fs.readFileSync(fullPath));
-
 export default (pathToFile1, pathToFile2) => {
   const fullPathToFile1 = checkPath(path.normalize(`/${pathToFile1}`));
   const fullPathToFile2 = checkPath(path.normalize(`/${pathToFile2}`));
 
   if (fs.statSync(fullPathToFile1).size === 0) {
-    return compareFiles({}, getJsonContent(fullPathToFile2));
+    return compareFiles({}, parseFile(fullPathToFile2));
   }
 
   if (fs.statSync(fullPathToFile2).size === 0) {
-    return compareFiles(getJsonContent(fullPathToFile1), {});
+    return compareFiles(parseFile(fullPathToFile1), {});
   }
 
-  return compareFiles(getJsonContent(fullPathToFile1), getJsonContent(fullPathToFile2));
+  return compareFiles(parseFile(fullPathToFile1), parseFile(fullPathToFile2));
 };
