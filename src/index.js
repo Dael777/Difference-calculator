@@ -10,9 +10,10 @@ const genFilesDiff = (firstFile = {}, secondFile = {}) => {
   const filesDifference = allKeys.map((elem) => {
     if (_.has(firstFile, elem)) {
       if (_.has(secondFile, elem)) {
-        return (firstFile[elem] === secondFile[elem])
-          ? `    ${elem}: ${firstFile[elem]}`
-          : _.concat([`  + ${elem}: ${secondFile[elem]}`], [`  - ${elem}: ${firstFile[elem]}`]).join('\n');
+        if (firstFile[elem] === secondFile[elem]) {
+          return `    ${elem}: ${firstFile[elem]}`;
+        }
+        return _.concat([`  + ${elem}: ${secondFile[elem]}`], [`  - ${elem}: ${firstFile[elem]}`]).join('\n');
       }
       return `  - ${elem}: ${firstFile[elem]}`;
     }
@@ -31,5 +32,8 @@ export default (pathToFile1, pathToFile2) => {
   const file1Content = fs.readFileSync(fullPathToFile1, 'utf-8');
   const file2Content = fs.readFileSync(fullPathToFile2, 'utf-8');
 
-  return genFilesDiff(parse(file1Content, file1Ext), parse(file2Content, file2Ext));
+  const parsedFile1 = parse(file1Content, file1Ext);
+  const parsedFile2 = parse(file2Content, file2Ext);
+
+  return genFilesDiff(parsedFile1, parsedFile2);
 };
