@@ -1,51 +1,56 @@
 import fs from 'fs';
-import gendiff from '../src';
+import path from 'path';
+import genDiff from '../src';
 
-describe('JSON files', () => {
-  const filesPath = '/__tests__/__fixtures__/';
-  const filesPathWithoutSlash = filesPath.substr(1);
-  const emptyJson = `${filesPath}empty.json`;
-  const firstJson = `${filesPath}before.json`;
-  const firstJsonWithoutSlash = `${filesPathWithoutSlash}before.json`;
-  const secondJson = `${filesPath}after.json`;
-  const secondJsonWithoutSlash = `${filesPathWithoutSlash}after.json`;
+describe('Files difference', () => {
+  const filesPath = '__tests__/__fixtures__/';
+  const emptyJson = path.join(filesPath, 'empty.json');
+  const firstJson = path.join(filesPath, 'before.json');
+  const secondJson = path.join(filesPath, 'after.json');
+  const data1 = fs.readFileSync(path.resolve(filesPath, '1.txt'), 'utf-8');
+  const data2 = fs.readFileSync(path.resolve(filesPath, '2.txt'), 'utf-8');
+  const data3 = fs.readFileSync(path.resolve(filesPath, '3.txt'), 'utf-8');
 
-  const data2 = fs.readFileSync(`.${filesPath}1.txt`, 'utf-8');
-  it('JSON empty first file', () => {
-    expect(gendiff(emptyJson, secondJson)).toBe(data2);
-  });
+  test.each([
+    [emptyJson, secondJson, data1],
+    [firstJson, emptyJson, data2],
+    [firstJson, secondJson, data3],
+  ])(
+    'JSON genDiff(%s, %s)',
+    (a, b, expected) => {
+      expect(genDiff(a, b)).toBe(expected);
+    },
+  );
 
-  const data3 = fs.readFileSync(`.${filesPath}2.txt`, 'utf-8');
-  it('JSON empty second file', () => {
-    expect(gendiff(firstJson, emptyJson)).toBe(data3);
-  });
+  const emptyYaml = path.join(filesPath, 'empty.yml');
+  const firstYaml = path.join(filesPath, 'before.yml');
+  const secondYaml = path.join(filesPath, 'after.yml');
 
-  const data4 = fs.readFileSync(`.${filesPath}3.txt`, 'utf-8');
-  it('JSON relative paths', () => {
-    expect(gendiff(firstJson, secondJson)).toBe(data4);
-  });
+  test.each([
+    [emptyYaml, secondYaml, data1],
+    [firstYaml, emptyYaml, data2],
+    [firstYaml, secondYaml, data3],
+    [firstYaml, secondJson, data3],
+  ])(
+    'YAML genDiff(%s, %s)',
+    (a, b, expected) => {
+      expect(genDiff(a, b)).toBe(expected);
+    },
+  );
 
-  it('JSON relative paths without slash', () => {
-    expect(gendiff(firstJsonWithoutSlash, secondJsonWithoutSlash)).toBe(data4);
-  });
+  const emptyIni = path.join(filesPath, 'empty.ini');
+  const firstIni = path.join(filesPath, 'before.ini');
+  const secondIni = path.join(filesPath, 'after.ini');
 
-  const emptyYaml = `${filesPath}empty.yml`;
-  const firstYaml = `${filesPath}before.yml`;
-  const secondYaml = `${filesPath}after.yml`;
-
-  it('YAML empty first file', () => {
-    expect(gendiff(emptyYaml, secondYaml)).toBe(data2);
-  });
-
-  it('YAML empty second file', () => {
-    expect(gendiff(firstYaml, emptyYaml)).toBe(data3);
-  });
-
-  it('YAML relative paths', () => {
-    expect(gendiff(firstYaml, secondYaml)).toBe(data4);
-  });
-
-  it('Different files extensions', () => {
-    expect(gendiff(firstYaml, secondJson)).toBe(data4);
-  });
+  test.each([
+    [emptyIni, secondIni, data1],
+    [firstIni, emptyIni, data2],
+    [firstIni, secondIni, data3],
+    [firstIni, secondYaml, data3],
+  ])(
+    'YAML genDiff(%s, %s)',
+    (a, b, expected) => {
+      expect(genDiff(a, b)).toBe(expected);
+    },
+  );
 });

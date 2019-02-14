@@ -1,39 +1,35 @@
 import fs from 'fs';
 import path from 'path';
 import _ from 'lodash';
-import parseFile from './parsers';
+import parse from './parsers';
 
 const currentPath = process.cwd();
 
-const checkPath = filePath => ((filePath.includes(currentPath)) ? filePath : `${currentPath}${filePath}`);
-
-const compareFiles = (firstFile, secondFile) => {
+const genFilesDiff = (firstFile = {}, secondFile = {}) => {
   const allKeys = _.union(Object.keys(firstFile), Object.keys(secondFile));
   const filesDifference = allKeys.map((elem) => {
     if (_.has(firstFile, elem)) {
       if (_.has(secondFile, elem)) {
         return (firstFile[elem] === secondFile[elem])
-          ? `    ${elem}: ${firstFile[elem]}\n`
-          : `  + ${elem}: ${secondFile[elem]}\n  - ${elem}: ${firstFile[elem]}\n`;
+          ? `    ${elem}: ${firstFile[elem]}`
+          : _.concat([`  + ${elem}: ${secondFile[elem]}`], [`  - ${elem}: ${firstFile[elem]}`]).join('\n');
       }
-      return `  - ${elem}: ${firstFile[elem]}\n`;
+      return `  - ${elem}: ${firstFile[elem]}`;
     }
-    return `  + ${elem}: ${secondFile[elem]}\n`;
+    return `  + ${elem}: ${secondFile[elem]}`;
   });
-  return `{\n${filesDifference.join('')}}`;
+  return _.concat('{', filesDifference, '}').join('\n');
 };
 
 export default (pathToFile1, pathToFile2) => {
-  const fullPathToFile1 = checkPath(path.normalize(`/${pathToFile1}`));
-  const fullPathToFile2 = checkPath(path.normalize(`/${pathToFile2}`));
+  const fullPathToFile1 = path.resolve(currentPath, pathToFile1);
+  const fullPathToFile2 = path.resolve(currentPath, pathToFile2);
 
-  if (fs.statSync(fullPathToFile1).size === 0) {
-    return compareFiles({}, parseFile(fullPathToFile2));
-  }
+  const file1Ext = path.extname(fullPathToFile1);
+  const file2Ext = path.extname(fullPathToFile2);
 
-  if (fs.statSync(fullPathToFile2).size === 0) {
-    return compareFiles(parseFile(fullPathToFile1), {});
-  }
+  const file1Content = fs.readFileSync(fullPathToFile1, 'utf-8');
+  const file2Content = fs.readFileSync(fullPathToFile2, 'utf-8');
 
-  return compareFiles(parseFile(fullPathToFile1), parseFile(fullPathToFile2));
+  return genFilesDiff(parse(file1Content, file1Ext), parse(file2Content, file2Ext));
 };

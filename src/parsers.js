@@ -1,20 +1,22 @@
-import fs from 'fs';
-import path from 'path';
 import yaml from 'js-yaml';
+import ini from 'ini';
 
 const extensions = [
   {
     name: '.json',
-    parse: filePath => JSON.parse(fs.readFileSync(filePath)),
+    parse: data => JSON.parse(data),
   },
   {
     name: '.yml',
-    parse: filePath => yaml.safeLoad(fs.readFileSync(filePath)),
+    parse: data => yaml.safeLoad(data),
+  },
+  {
+    name: '.ini',
+    parse: data => ini.parse(data),
   },
 ];
 
-export default (fullPath) => {
-  const ext = path.extname(fullPath);
+export default (fileData, ext) => {
   const obj = extensions.find(({ name }) => name === ext);
-  return obj.parse(fullPath);
+  return obj.parse(fileData);
 };
