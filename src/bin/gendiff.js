@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import program from 'commander';
+import buildAst from '../buildast';
 import gendiff from '..';
 
 program
@@ -8,7 +9,7 @@ program
   .option('-f, --format [type]', 'Output format')
   .arguments('<firstConfig> <secondConfig>')
   .action((firstConfig, secondConfig) => {
-    console.log(gendiff(firstConfig, secondConfig));
+    console.log(gendiff(buildAst(firstConfig, secondConfig)));
   });
 
 program.parse(process.argv);

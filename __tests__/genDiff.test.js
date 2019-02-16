@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import genDiff from '../src';
+import buildAst from '../src/buildast';
 
 describe('Files difference', () => {
   const filesPath = '__tests__/__fixtures__/';
@@ -18,7 +19,7 @@ describe('Files difference', () => {
   ])(
     'JSON genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(a, b)).toBe(expected);
+      expect(genDiff(buildAst(a, b))).toBe(expected);
     },
   );
 
@@ -34,7 +35,7 @@ describe('Files difference', () => {
   ])(
     'YAML genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(a, b)).toBe(expected);
+      expect(genDiff(buildAst(a, b))).toBe(expected);
     },
   );
 
@@ -50,7 +51,53 @@ describe('Files difference', () => {
   ])(
     'YAML genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(a, b)).toBe(expected);
+      expect(genDiff(buildAst(a, b))).toBe(expected);
+    },
+  );
+
+  const firstNestedJson = path.join(filesPath, 'before_nested.json');
+  const secondNestedJson = path.join(filesPath, 'after_nested.json');
+  const expectedNested = fs.readFileSync(path.resolve(filesPath, 'expected_nested.txt'), 'utf-8');
+
+  test.each([
+    [firstNestedJson, secondNestedJson, expectedNested],
+  ])(
+    'JSON nested genDiff(%s, %s)',
+    (a, b, expected) => {
+      expect(genDiff(buildAst(a, b))).toBe(expected);
+    },
+  );
+
+  const firstNestedYaml = path.join(filesPath, 'before_nested.yml');
+  const secondNestedYaml = path.join(filesPath, 'after_nested.yml');
+
+  test.each([
+    [firstNestedYaml, secondNestedYaml, expectedNested],
+  ])(
+    'YAML nested genDiff(%s, %s)',
+    (a, b, expected) => {
+      expect(genDiff(buildAst(a, b))).toBe(expected);
+    },
+  );
+
+  const firstNestedIni = path.join(filesPath, 'before_nested.ini');
+  const secondNestedIni = path.join(filesPath, 'after_nested.ini');
+
+  test.each([
+    [firstNestedIni, secondNestedIni, expectedNested],
+  ])(
+    'INI nested genDiff(%s, %s)',
+    (a, b, expected) => {
+      expect(genDiff(buildAst(a, b))).toBe(expected);
+    },
+  );
+
+  test.each([
+    [firstNestedIni, secondNestedYaml, expectedNested],
+  ])(
+    'Different files nested genDiff(%s, %s)',
+    (a, b, expected) => {
+      expect(genDiff(buildAst(a, b))).toBe(expected);
     },
   );
 });
