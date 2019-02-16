@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import genDiff from '../src';
+import Render from '../src';
 import buildAst from '../src/buildast';
 
 describe('Files difference', () => {
@@ -19,7 +19,8 @@ describe('Files difference', () => {
   ])(
     'JSON genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(buildAst(a, b))).toBe(expected);
+      const render = new Render(buildAst(a, b));
+      expect(render.renderNormal()).toBe(expected);
     },
   );
 
@@ -35,7 +36,8 @@ describe('Files difference', () => {
   ])(
     'YAML genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(buildAst(a, b))).toBe(expected);
+      const render = new Render(buildAst(a, b));
+      expect(render.renderNormal()).toBe(expected);
     },
   );
 
@@ -51,7 +53,8 @@ describe('Files difference', () => {
   ])(
     'YAML genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(buildAst(a, b))).toBe(expected);
+      const render = new Render(buildAst(a, b));
+      expect(render.renderNormal()).toBe(expected);
     },
   );
 
@@ -64,7 +67,8 @@ describe('Files difference', () => {
   ])(
     'JSON nested genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(buildAst(a, b))).toBe(expected);
+      const render = new Render(buildAst(a, b));
+      expect(render.renderNormal()).toBe(expected);
     },
   );
 
@@ -76,7 +80,8 @@ describe('Files difference', () => {
   ])(
     'YAML nested genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(buildAst(a, b))).toBe(expected);
+      const render = new Render(buildAst(a, b));
+      expect(render.renderNormal()).toBe(expected);
     },
   );
 
@@ -88,7 +93,8 @@ describe('Files difference', () => {
   ])(
     'INI nested genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(buildAst(a, b))).toBe(expected);
+      const render = new Render(buildAst(a, b));
+      expect(render.renderNormal()).toBe(expected);
     },
   );
 
@@ -97,7 +103,8 @@ describe('Files difference', () => {
   ])(
     'Different files nested genDiff(%s, %s)',
     (a, b, expected) => {
-      expect(genDiff(buildAst(a, b))).toBe(expected);
+      const render = new Render(buildAst(a, b));
+      expect(render.renderNormal()).toBe(expected);
     },
   );
 });
