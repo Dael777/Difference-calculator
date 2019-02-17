@@ -81,7 +81,7 @@ describe('Files difference', () => {
 
   const firstNestedIni = path.join(filesPath, 'before_nested.ini');
   const secondNestedIni = path.join(filesPath, 'after_nested.ini');
-  const outputType = 'plain';
+  const outputPlain = 'plain';
 
   test.each([
     [firstNestedIni, secondNestedIni, expectedNested],
@@ -104,7 +104,7 @@ describe('Files difference', () => {
   const expectedNestedPlain = fs.readFileSync(path.resolve(filesPath, 'expected_nested_plain.txt'), 'utf-8');
 
   test.each([
-    [firstNestedIni, secondNestedIni, outputType, expectedNestedPlain],
+    [firstNestedIni, secondNestedIni, outputPlain, expectedNestedPlain],
   ])(
     'INI files nested plain output(%s, %s)',
     (a, b, c, expected) => {
@@ -113,9 +113,20 @@ describe('Files difference', () => {
   );
 
   test.each([
-    [firstNestedJson, secondNestedIni, outputType, expectedNestedPlain],
+    [firstNestedJson, secondNestedIni, outputPlain, expectedNestedPlain],
   ])(
     'Different files nested plain output(%s, %s)',
+    (a, b, c, expected) => {
+      expect(genDiff(a, b, c)).toBe(expected);
+    },
+  );
+
+  const expectedNestedJson = fs.readFileSync(path.resolve(filesPath, 'expected_nested_json.txt'), 'utf-8');
+  const outputJson = 'json';
+  test.each([
+    [firstNestedJson, secondNestedYaml, outputJson, expectedNestedJson],
+  ])(
+    'Different files nested JSON output(%s, %s)',
     (a, b, c, expected) => {
       expect(genDiff(a, b, c)).toBe(expected);
     },

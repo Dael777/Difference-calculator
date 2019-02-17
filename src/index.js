@@ -83,9 +83,29 @@ export default (pathToFile1, pathToFile2, outputType = 'normal') => {
     return _.flattenDeep(result).join('\n');
   };
 
+  const renderJson = (astData) => {
+    const iter = (data, parent) => {
+      const filtered = data.filter(elem => elem.modified || elem.children.length > 0);
+      const result = filtered.map((elem) => {
+        if (elem.children.length > 0) {
+          return iter(elem.children, `${parent}${elem.name}.`);
+        }
+        switch (elem.modified) {
+          case 'added': return { [`${parent}${elem.name}`]: 'added', value: elem.value };
+          case 'removed': return { [`${parent}${elem.name}`]: 'removed' };
+          case 'updated': return { [`${parent}${elem.name}`]: 'updated', prevValue: elem.value[0], value: elem.value[1] };
+          default: return '';
+        }
+      });
+      return result;
+    };
+    return JSON.stringify(_.flattenDeep(iter(astData, '')));
+  };
+
   const outputChoose = {
     normal: renderNormal,
     plain: renderPlain,
+    json: renderJson,
   };
 
   return outputChoose[outputType](ast);

@@ -1,0 +1,37 @@
+{
+  "common.setting2": "removed",
+  "common.setting3": {
+    "from": true,
+    "to": {
+      "key": "value"
+    }
+  },
+  "common.setting6.ops": {
+    "added": "vops"
+  },
+  "common.follow": {
+    "added": false
+  },
+  "common.setting4": {
+    "added": "blah blah"
+  },
+  "common.setting5": {
+    "added": {
+      "key5": "value5"
+    }
+  },
+  "group1.baz": {
+    "from": "bas",
+    "to": "bars",
+  },
+  "group1.nest": {
+    "from": {
+      "key": "value"
+    },
+    "to": "str"
+  },
+  "group2": "removed",
+  "group3": {
+    "fee": 100500
+  }
+}

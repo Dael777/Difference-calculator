@@ -27,3 +27,7 @@
 <h2>Nested structure (plain output)</h2>
 
 [![asciicast](https://asciinema.org/a/lAMY0nEECLybiYAxxlDotzCj5.svg)](https://asciinema.org/a/lAMY0nEECLybiYAxxlDotzCj5)
+
+<h2>Nested structure (JSON output)</h2>
+
+[![asciicast](https://asciinema.org/a/qYEMqjfji27tbmunJSJkrZdVV.svg)](https://asciinema.org/a/qYEMqjfji27tbmunJSJkrZdVV)

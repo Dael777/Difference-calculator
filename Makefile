@@ -10,6 +10,9 @@ publish:
 lint:
 	npx eslint .
 
+lint2:
+	npx eslint --format json .
+
 test:
 	npm test
 
