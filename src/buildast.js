@@ -6,40 +6,41 @@ const buildAst = (data1 = {}, data2 = {}) => {
     if (!_.has(data1, elem)) {
       return [...acc, {
         name: elem,
-        value: data2[elem],
-        modified: 'added',
-        children: [],
+        oldValue: null,
+        newValue: data2[elem],
+        type: 'added',
       }];
     }
     if (!_.has(data2, elem)) {
       return [...acc, {
         name: elem,
-        value: data1[elem],
-        modified: 'removed',
-        children: [],
+        oldValue: data1[elem],
+        newValue: null,
+        type: 'removed',
       }];
     }
     if (data1[elem] instanceof Object && data2[elem] instanceof Object) {
       return [...acc, {
         name: elem,
-        value: '',
-        modified: '',
+        oldValue: null,
+        newValue: null,
+        type: 'nested',
         children: buildAst(data1[elem], data2[elem]),
       }];
     }
     if (data1[elem] === data2[elem]) {
       return [...acc, {
         name: elem,
-        value: data1[elem],
-        modified: '',
-        children: [],
+        oldValue: data1[elem],
+        newValue: data1[elem],
+        type: 'same',
       }];
     }
     return [...acc, {
       name: elem,
-      value: [data1[elem], data2[elem]],
-      modified: 'updated',
-      children: [],
+      oldValue: data1[elem],
+      newValue: data2[elem],
+      type: 'updated',
     }];
   }, []);
   return dataDiff;
