@@ -23,3 +23,7 @@
 <h2>Nested structure</h2>
 
 [![asciicast](https://asciinema.org/a/b1vCfA0Ze0SDrGm1zd8emYhxo.svg)](https://asciinema.org/a/b1vCfA0Ze0SDrGm1zd8emYhxo)
+
+<h2>Nested structure (plain output)</h2>
+
+[![asciicast](https://asciinema.org/a/lAMY0nEECLybiYAxxlDotzCj5.svg)](https://asciinema.org/a/lAMY0nEECLybiYAxxlDotzCj5)

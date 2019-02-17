@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import Render from '../src';
-import buildAst from '../src/buildast';
+import genDiff from '../src';
 
 describe('Files difference', () => {
   const filesPath = '__tests__/__fixtures__/';
@@ -19,8 +18,7 @@ describe('Files difference', () => {
   ])(
     'JSON genDiff(%s, %s)',
     (a, b, expected) => {
-      const render = new Render(buildAst(a, b));
-      expect(render.renderNormal()).toBe(expected);
+      expect(genDiff(a, b)).toBe(expected);
     },
   );
 
@@ -36,8 +34,7 @@ describe('Files difference', () => {
   ])(
     'YAML genDiff(%s, %s)',
     (a, b, expected) => {
-      const render = new Render(buildAst(a, b));
-      expect(render.renderNormal()).toBe(expected);
+      expect(genDiff(a, b)).toBe(expected);
     },
   );
 
@@ -53,8 +50,7 @@ describe('Files difference', () => {
   ])(
     'YAML genDiff(%s, %s)',
     (a, b, expected) => {
-      const render = new Render(buildAst(a, b));
-      expect(render.renderNormal()).toBe(expected);
+      expect(genDiff(a, b)).toBe(expected);
     },
   );
 
@@ -67,8 +63,7 @@ describe('Files difference', () => {
   ])(
     'JSON nested genDiff(%s, %s)',
     (a, b, expected) => {
-      const render = new Render(buildAst(a, b));
-      expect(render.renderNormal()).toBe(expected);
+      expect(genDiff(a, b)).toBe(expected);
     },
   );
 
@@ -80,21 +75,20 @@ describe('Files difference', () => {
   ])(
     'YAML nested genDiff(%s, %s)',
     (a, b, expected) => {
-      const render = new Render(buildAst(a, b));
-      expect(render.renderNormal()).toBe(expected);
+      expect(genDiff(a, b)).toBe(expected);
     },
   );
 
   const firstNestedIni = path.join(filesPath, 'before_nested.ini');
   const secondNestedIni = path.join(filesPath, 'after_nested.ini');
+  const outputType = 'plain';
 
   test.each([
     [firstNestedIni, secondNestedIni, expectedNested],
   ])(
     'INI nested genDiff(%s, %s)',
     (a, b, expected) => {
-      const render = new Render(buildAst(a, b));
-      expect(render.renderNormal()).toBe(expected);
+      expect(genDiff(a, b)).toBe(expected);
     },
   );
 
@@ -103,8 +97,27 @@ describe('Files difference', () => {
   ])(
     'Different files nested genDiff(%s, %s)',
     (a, b, expected) => {
-      const render = new Render(buildAst(a, b));
-      expect(render.renderNormal()).toBe(expected);
+      expect(genDiff(a, b)).toBe(expected);
+    },
+  );
+
+  const expectedNestedPlain = fs.readFileSync(path.resolve(filesPath, 'expected_nested_plain.txt'), 'utf-8');
+
+  test.each([
+    [firstNestedIni, secondNestedIni, outputType, expectedNestedPlain],
+  ])(
+    'INI files nested plain output(%s, %s)',
+    (a, b, c, expected) => {
+      expect(genDiff(a, b, c)).toBe(expected);
+    },
+  );
+
+  test.each([
+    [firstNestedJson, secondNestedIni, outputType, expectedNestedPlain],
+  ])(
+    'Different files nested plain output(%s, %s)',
+    (a, b, c, expected) => {
+      expect(genDiff(a, b, c)).toBe(expected);
     },
   );
 });
