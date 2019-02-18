@@ -3,7 +3,7 @@ import renderPlain from './plain';
 import renderJson from './json';
 
 const outputChoose = {
-  default: renderText,
+  text: renderText,
   plain: renderPlain,
   json: renderJson,
 };

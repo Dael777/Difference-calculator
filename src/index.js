@@ -6,7 +6,7 @@ import buildAst from './buildast';
 
 const currentPath = process.cwd();
 
-export default (pathToFile1, pathToFile2, renderType = 'default') => {
+export default (pathToFile1, pathToFile2, renderType = 'text') => {
   const fullPathToFile1 = path.resolve(currentPath, pathToFile1);
   const fullPathToFile2 = path.resolve(currentPath, pathToFile2);
 
