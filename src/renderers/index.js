@@ -1,9 +1,9 @@
-import renderDefault from './default';
+import renderText from './text';
 import renderPlain from './plain';
 import renderJson from './json';
 
 const outputChoose = {
-  default: renderDefault,
+  default: renderText,
   plain: renderPlain,
   json: renderJson,
 };

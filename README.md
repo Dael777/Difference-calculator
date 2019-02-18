@@ -30,4 +30,4 @@
 
 <h2>Nested structure (JSON output)</h2>
 
-[![asciicast](https://asciinema.org/a/qYEMqjfji27tbmunJSJkrZdVV.svg)](https://asciinema.org/a/qYEMqjfji27tbmunJSJkrZdVV)
+[![asciicast](https://asciinema.org/a/fQn6MYgeAaUzoyQdYCmt4wS0b.svg)](https://asciinema.org/a/fQn6MYgeAaUzoyQdYCmt4wS0b)

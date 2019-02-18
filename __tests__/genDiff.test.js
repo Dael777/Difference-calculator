@@ -48,7 +48,7 @@ describe('Files difference', () => {
     [firstIni, secondIni, data3],
     [firstIni, secondYaml, data3],
   ])(
-    'YAML genDiff(%s, %s)',
+    'INI genDiff(%s, %s)',
     (a, b, expected) => {
       expect(genDiff(a, b)).toBe(expected);
     },
