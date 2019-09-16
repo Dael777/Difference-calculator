@@ -9,7 +9,7 @@
 
 <h2>JSON files</h2>
 
-[![asciicast](https://asciinema.org/a/kGep3XLiiLhQjIGvQtObEzZsR.svg)](https://asciinema.org/a/kGep3XLiiLhQjIGvQtObEzZsR)
+[![asciicast](https://asciinema.org/a/1rivJUWk4GCefwlmxY4Ln12I9.svg)](https://asciinema.org/a/1rivJUWk4GCefwlmxY4Ln12I9)
 
 <h2>YAML files</h2>
 
