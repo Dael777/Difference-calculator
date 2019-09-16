@@ -1,4 +1,5 @@
 # Difference calculator
+Вычислитель разницы между конфигурационными файлами, запускаемый из консоли.
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/4e6514622814838e9eb0/maintainability)](https://codeclimate.com/github/Dael777/Difference-calculator/maintainability)
 [![Build Status](https://travis-ci.org/Dael777/Difference-calculator.svg?branch=master)](https://travis-ci.org/Dael777/Difference-calculator)
