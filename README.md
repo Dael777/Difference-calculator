@@ -1,7 +1,20 @@
-# project-lvl2-s413
+# Difference calculator
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/4e6514622814838e9eb0/maintainability)](https://codeclimate.com/github/Dael777/Difference-calculator/maintainability)
 [![Build Status](https://travis-ci.org/Dael777/Difference-calculator.svg?branch=master)](https://travis-ci.org/Dael777/Difference-calculator)
+
+<h2>Используемые технологии</h2>
+<ul>
+  <li>Javascript (ES6)</li>
+  <li>EsLint</li>
+  <li>Babel</li>
+  <li>Jest</li>
+  <li>commander.js</li>
+  <li>Lodash</li>
+  <li>Node.js FS</li>
+  <li>js-yaml</li>
+  <li>npm ini</li>
+</ul>
 
 <h2>Help</h2>
 
